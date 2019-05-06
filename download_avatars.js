@@ -29,7 +29,10 @@ function downloadImageByURL(url, filePath) {
           .pipe(fs.createWriteStream(filePath));
 }
 
-getRepoContributors("jquery", "jquery", function(err, result) {
+getRepoContributors(process.argv[2], process.argv[3], function(err, result) {
+  if(!process.argv[2] && !process.argv[3]) {
+    console.log("Error: Missing repo owner and/or repo name.")
+  }
   console.log("Errors:", err);
   for (var i = 0; i < result.length; i++) {
     downloadImageByURL(result[i].avatar_url, "./avatars/" + result[i].login + ".jpeg")
